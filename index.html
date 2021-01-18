@@ -1,0 +1,128 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+     img{
+     	height: 500px;
+     	width: 500px;
+     	border:none;
+        text-align: center;
+        display: block;
+     }
+     .hi{
+     	text-align: center;
+     }
+	</style>
+</head>
+<body>
+
+<img id="1"><br><br>
+<img id="2"><br><br>
+<img id="3"><br><br>
+<img id="4"><br><br>
+<img id="5"><br><br>
+<img id="6"><br><br>
+<img id="7"><br><br>
+<img id="8"><br><br>
+<img id="9"><br><br>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-database.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-storage.js"></script> 
+
+<script id="MainScript">
+	var ImgName,ImgUrl,t,pn,x,y;
+    var files=[];
+    var a=[];
+	var reader;
+
+	var firebaseConfig = {
+    apiKey: "AIzaSyAmUQS291AUDGeaIC8uhzUsyIt77Bqzq94",
+    authDomain: "meme1-82167.firebaseapp.com",
+    projectId: "meme1-82167",
+    storageBucket: "meme1-82167.appspot.com",
+    messagingSenderId: "367484022529",
+    appId: "1:367484022529:web:c017ba7b21b0b20c88f500",
+    measurementId: "G-GYMDPL572L"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script>
+hii();
+function hii(){
+for(i=0;i<9;i++){
+
+
+	 a[i]=Math.floor((Math.random() * 21)); 
+
+}
+	 
+
+	ImgName= a[0];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("1").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[1];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("2").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[2];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("3").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[3];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("4").src=snapshot.val().Link;
+     
+});
+
+	ImgName= a[4];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("5").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[5];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("6").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[6];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("7").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[7];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("8").src=snapshot.val().Link;
+      
+});
+
+	ImgName= a[8];//Math.floor((Math.random() * 10)); 
+	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
+         document.getElementById("9").src=snapshot.val().Link;
+      
+});
+
+}
+</script>
+<div class="hi">
+<input type="button" value="next->" onclick="hii()">
+</div>
+
+
+
+</body>
+</html>
