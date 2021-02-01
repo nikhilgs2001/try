@@ -1,33 +1,77 @@
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
-     img{
-     	height: 500px;
-     	width: 500px;
-     	border:none;
-        text-align: center;
-        display: block;
-     }
-     .hi{
-     	text-align: center;
-     }
-	</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body{
+    background-color: #f2f2f2;
+  }
+	img{
+		height: auto;
+		width: 100%;
+		
+	}
+  .head1{
+      background-color: #c33c3c;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      color: white;
+      font-size: 50px;
+      font-family: Brush Script MT;
+      text-align: center;
+    }
+   
+.text{
+  border-color: #d57676;
+  color: #ff4d67;
+  outline: none;
+  background-color: transparent;
+  font-size: 15px;
+
+}
+
+.text{
+  margin-left: 50px;
+}
+#select,#upload{
+color: white;
+background-color: #cc001f;
+font-size: 20px;
+border: none;
+border-radius: 15px;
+padding-top: 10px;
+padding-bottom: 10px;
+padding-left: 10px;
+padding-right: 10px;
+margin-top: 20px;
+outline: none;
+}
+#select{
+
+  margin-left: 25px;
+}
+#upload{
+  margin-left: 30px;
+}
+#UpProgress{
+  color: #ff1a3c;
+  font-family: Copperplate;
+  margin-left: 30px;
+}
+</style>
+
 </head>
 <body>
+  <div class="head1">
+    Really Artistic
+  </div><br><br>
+<span style="font-size: 20px;color: #cd5c5c;font-weight: bold;margin-left: 20px">Comment:</span><input type="text" id="name" class="text"><br><br>
+<img id="myimg"><label id="UpProgress"></label><br><br>
 
-<img id="1"><br><br>
-<img id="2"><br><br>
-<img id="3"><br><br>
-<img id="4"><br><br>
-<img id="5"><br><br>
-<img id="6"><br><br>
-<img id="7"><br><br>
-<img id="8"><br><br>
-<img id="9"><br><br>
+<input type="button" id="select" value="Select Image">
+<input type="button" id="upload" value="upload Image">
 
 
-
+<!-- FIREBASE LIBRARIES-->
 
 <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
@@ -35,11 +79,10 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-storage.js"></script> 
 
 <script id="MainScript">
-	var ImgName,ImgUrl,t,pn,x,y;
-    var files=[];
-    var a=[];
+	var ImgName,ImgUrl;
+	var files = [];
 	var reader;
-
+var a;
 	var firebaseConfig = {
     apiKey: "AIzaSyAmUQS291AUDGeaIC8uhzUsyIt77Bqzq94",
     authDomain: "meme1-82167.firebaseapp.com",
@@ -50,79 +93,73 @@
     measurementId: "G-GYMDPL572L"
   };
   firebase.initializeApp(firebaseConfig);
-</script>
-<script>
-hii();
-function hii(){
-for(i=0;i<9;i++){
 
 
-	 a[i]=Math.floor((Math.random() * 21)); 
+  document.getElementById("select").onclick = function(e){
+  	var input = document.createElement('input');
+  	input.type='file';
+  	
 
-}
-	 
+  	input.onchange = e => {
+  		files = e.target.files;
+  		reader = new FileReader();
+  		reader.onload = function(){
+  			document.getElementById("myimg").src = reader.result;
+  		}
+  		reader.readAsDataURL(files[0]);
 
-	ImgName= a[0];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("1").src=snapshot.val().Link;
-      
-});
+  	}
+  	input.click();
+  }
 
-	ImgName= a[1];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("2").src=snapshot.val().Link;
-      
-});
+//------Upload progress
+document.getElementById("upload").onclick=function(){
+	//ImgName = document.getElementById("namebox").value;
+ 
+firebase.database().ref('Pictures/'+"nikhil"+'/Comment').on('value',(snap)=>{
+    ImgName=snap.val();
+  });
 
-	ImgName= a[2];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("3").src=snapshot.val().Link;
-      
-});
 
-	ImgName= a[3];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("4").src=snapshot.val().Link;
-     
-});
 
-	ImgName= a[4];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("5").src=snapshot.val().Link;
-      
-});
 
-	ImgName= a[5];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("6").src=snapshot.val().Link;
-      
-});
+	name=document.getElementById("name").value;
+	var uploadTask = firebase.storage().ref('Images/'+ImgName+".jpeg").put(files[0]);
+    uploadTask.on('state_changed',function(snapshot){
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    document.getElementById('UpProgress').innerHTML = 'Upload'+progress+'%';
 
-	ImgName= a[6];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("7").src=snapshot.val().Link;
-      
-});
 
-	ImgName= a[7];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("8").src=snapshot.val().Link;
-      
-});
+    },
 
-	ImgName= a[8];//Math.floor((Math.random() * 10)); 
-	firebase.database().ref('Pictures/'+ImgName).on('value',function(snapshot){
-         document.getElementById("9").src=snapshot.val().Link;
-      
-});
+    function(error){
+    	alert("error");
+    },
+    function(){
+    	uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+            ImgUrl = url;
+    	
+        firebase.database().ref('Pictures/'+ImgName).set({
+            Name: ImgName,
+            Comment:name,
+            Link: ImgUrl,
+            
+            like: "0"
+        });
+alert('Image uploaded Successfully your Image Id is '+ImgName);
+    }
+         );
+    	});
+    
+    firebase.database().ref('Pictures/'+'nikhil').set({
+        Comment:firebase.database.ServerValue.increment(1)
+    });
 
 }
+
+
+
 </script>
-<div class="hi">
-<input type="button" value="next->" onclick="hii()">
-</div>
 
-
-
-</body>
+</body>	
 </html>
